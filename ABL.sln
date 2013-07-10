@@ -1,0 +1,32 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Express 2012 for Windows Desktop
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AidaBallisticsLibrary", "AidaBallisticsLibrary\AidaBallisticsLibrary.csproj", "{4CBD2BFD-6D7F-4B43-9196-A34B667BD2D3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AidaBallistics", "AidaBallistics\AidaBallistics.csproj", "{22F43B09-069D-4FFE-9720-56124BCEEE37}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ADSEditor", "ADSEditor\ADSEditor.csproj", "{BF159A3B-71B2-49CE-859D-ABA334181FC7}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{4CBD2BFD-6D7F-4B43-9196-A34B667BD2D3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4CBD2BFD-6D7F-4B43-9196-A34B667BD2D3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4CBD2BFD-6D7F-4B43-9196-A34B667BD2D3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4CBD2BFD-6D7F-4B43-9196-A34B667BD2D3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{22F43B09-069D-4FFE-9720-56124BCEEE37}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{22F43B09-069D-4FFE-9720-56124BCEEE37}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{22F43B09-069D-4FFE-9720-56124BCEEE37}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{22F43B09-069D-4FFE-9720-56124BCEEE37}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BF159A3B-71B2-49CE-859D-ABA334181FC7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BF159A3B-71B2-49CE-859D-ABA334181FC7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BF159A3B-71B2-49CE-859D-ABA334181FC7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BF159A3B-71B2-49CE-859D-ABA334181FC7}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

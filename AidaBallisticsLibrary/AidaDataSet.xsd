@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="AidaDataSet" targetNamespace="http://tempuri.org/AidaDataSet.xsd" xmlns:mstns="http://tempuri.org/AidaDataSet.xsd" xmlns="http://tempuri.org/AidaDataSet.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections />
+        <Tables />
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="AidaDataSet" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="AidaDataSet" msprop:Generator_UserDSName="AidaDataSet">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="Bullets" msprop:Generator_TableClassName="BulletsDataTable" msprop:Generator_TableVarName="tableBullets" msprop:Generator_TablePropName="Bullets" msprop:Generator_RowDeletingName="BulletsRowDeleting" msprop:Generator_RowChangingName="BulletsRowChanging" msprop:Generator_RowEvHandlerName="BulletsRowChangeEventHandler" msprop:Generator_RowDeletedName="BulletsRowDeleted" msprop:Generator_UserTableName="Bullets" msprop:Generator_RowChangedName="BulletsRowChanged" msprop:Generator_RowEvArgName="BulletsRowChangeEvent" msprop:Generator_RowClassName="BulletsRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="UniqueID" msdata:DataType="System.Guid, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" msdata:ReadOnly="true" msdata:AutoIncrementSeed="-1" msdata:AutoIncrementStep="-1" msprop:Generator_ColumnVarNameInTable="columnUniqueID" msprop:Generator_ColumnPropNameInRow="UniqueID" msprop:Generator_ColumnPropNameInTable="UniqueIDColumn" msprop:Generator_UserColumnName="UniqueID" type="xs:string" />
+              <xs:element name="Caliber" msprop:Generator_ColumnVarNameInTable="columnCaliber" msprop:Generator_ColumnPropNameInRow="Caliber" msprop:Generator_ColumnPropNameInTable="CaliberColumn" msprop:Generator_UserColumnName="Caliber" type="xs:double" minOccurs="0" />
+              <xs:element name="Brand" msprop:Generator_ColumnVarNameInTable="columnBrand" msprop:Generator_ColumnPropNameInRow="Brand" msprop:Generator_ColumnPropNameInTable="BrandColumn" msprop:Generator_UserColumnName="Brand" type="xs:string" minOccurs="0" />
+              <xs:element name="Name" msprop:Generator_ColumnVarNameInTable="columnName" msprop:Generator_ColumnPropNameInRow="Name" msprop:Generator_ColumnPropNameInTable="NameColumn" msprop:Generator_UserColumnName="Name" type="xs:string" minOccurs="0" />
+              <xs:element name="StatedWeight" msprop:Generator_ColumnVarNameInTable="columnStatedWeight" msprop:Generator_ColumnPropNameInRow="StatedWeight" msprop:Generator_ColumnPropNameInTable="StatedWeightColumn" msprop:Generator_UserColumnName="StatedWeight" type="xs:double" minOccurs="0" />
+              <xs:element name="TrueWeight" msprop:Generator_ColumnVarNameInTable="columnTrueWeight" msprop:Generator_ColumnPropNameInRow="TrueWeight" msprop:Generator_ColumnPropNameInTable="TrueWeightColumn" msprop:Generator_UserColumnName="TrueWeight" type="xs:double" minOccurs="0" />
+              <xs:element name="Length" msprop:Generator_ColumnVarNameInTable="columnLength" msprop:Generator_ColumnPropNameInRow="Length" msprop:Generator_ColumnPropNameInTable="LengthColumn" msprop:Generator_UserColumnName="Length" type="xs:double" minOccurs="0" />
+              <xs:element name="SectionalDensity" msprop:Generator_ColumnVarNameInTable="columnSectionalDensity" msprop:Generator_ColumnPropNameInRow="SectionalDensity" msprop:Generator_ColumnPropNameInTable="SectionalDensityColumn" msprop:Generator_UserColumnName="SectionalDensity" type="xs:double" minOccurs="0" />
+              <xs:element name="BC1" msprop:Generator_ColumnVarNameInTable="columnBC1" msprop:Generator_ColumnPropNameInRow="BC1" msprop:Generator_ColumnPropNameInTable="BC1Column" msprop:Generator_UserColumnName="BC1" type="xs:double" minOccurs="0" />
+              <xs:element name="BC2" msprop:Generator_ColumnVarNameInTable="columnBC2" msprop:Generator_ColumnPropNameInRow="BC2" msprop:Generator_ColumnPropNameInTable="BC2Column" msprop:Generator_UserColumnName="BC2" type="xs:double" minOccurs="0" />
+              <xs:element name="BC3" msprop:Generator_ColumnVarNameInTable="columnBC3" msprop:Generator_ColumnPropNameInRow="BC3" msprop:Generator_ColumnPropNameInTable="BC3Column" msprop:Generator_UserColumnName="BC3" type="xs:double" minOccurs="0" />
+              <xs:element name="BC4" msprop:Generator_ColumnVarNameInTable="columnBC4" msprop:Generator_ColumnPropNameInRow="BC4" msprop:Generator_ColumnPropNameInTable="BC4Column" msprop:Generator_UserColumnName="BC4" type="xs:double" minOccurs="0" />
+              <xs:element name="BC5" msprop:Generator_ColumnVarNameInTable="columnBC5" msprop:Generator_ColumnPropNameInRow="BC5" msprop:Generator_ColumnPropNameInTable="BC5Column" msprop:Generator_UserColumnName="BC5" type="xs:double" minOccurs="0" />
+              <xs:element name="V1" msprop:Generator_ColumnVarNameInTable="columnV1" msprop:Generator_ColumnPropNameInRow="V1" msprop:Generator_ColumnPropNameInTable="V1Column" msprop:Generator_UserColumnName="V1" type="xs:int" minOccurs="0" />
+              <xs:element name="V2" msprop:Generator_ColumnVarNameInTable="columnV2" msprop:Generator_ColumnPropNameInRow="V2" msprop:Generator_ColumnPropNameInTable="V2Column" msprop:Generator_UserColumnName="V2" type="xs:int" minOccurs="0" />
+              <xs:element name="V3" msprop:Generator_ColumnVarNameInTable="columnV3" msprop:Generator_ColumnPropNameInRow="V3" msprop:Generator_ColumnPropNameInTable="V3Column" msprop:Generator_UserColumnName="V3" type="xs:int" minOccurs="0" />
+              <xs:element name="V4" msprop:Generator_ColumnVarNameInTable="columnV4" msprop:Generator_ColumnPropNameInRow="V4" msprop:Generator_ColumnPropNameInTable="V4Column" msprop:Generator_UserColumnName="V4" type="xs:int" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+    <xs:unique name="Constraint1" msdata:PrimaryKey="true">
+      <xs:selector xpath=".//mstns:Bullets" />
+      <xs:field xpath="mstns:UniqueID" />
+    </xs:unique>
+  </xs:element>
+</xs:schema>
