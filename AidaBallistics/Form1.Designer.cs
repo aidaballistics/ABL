@@ -1,6 +1,6 @@
 ﻿namespace AidaBallistics
 {
-    partial class Form1
+    partial class frmMain
     {
         /// <summary>
         /// Required designer variable.
@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmMain));
             this.txtMain = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
@@ -39,14 +40,15 @@
             this.txtMain.Size = new System.Drawing.Size(1012, 375);
             this.txtMain.TabIndex = 0;
             // 
-            // Form1
+            // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1036, 399);
             this.Controls.Add(this.txtMain);
-            this.Name = "Form1";
-            this.Text = "Form1";
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.Name = "frmMain";
+            this.Text = "Aida Ballistics";
             this.ResumeLayout(false);
             this.PerformLayout();
 

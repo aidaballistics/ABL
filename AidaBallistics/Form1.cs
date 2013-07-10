@@ -7,13 +7,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using ABL;
+using AidaBallisticsLibrary;
 
 namespace AidaBallistics
 {
-    public partial class Form1 : Form
+    public partial class frmMain : Form
     {
-        public Form1()
+        public frmMain()
         {
             InitializeComponent();
 
@@ -32,9 +32,9 @@ namespace AidaBallistics
             k = Aida.Solve(Aida.DragFunctions.G1, bc, v, sh, angle, zeroangle, windspeed, windangle);
 
             StringBuilder sb = new StringBuilder();
-            for (int s = 0; s <= 100; s++)
+            for (int s = 0; s <= 100; s+=10)
             {
-                sb.AppendLine("Range: " + Aida.Solution.GetRange(s * 10) + "\t|\tEnergy: " + Aida.Solution.GetKineticEnergy(s * 10, 180) + "\t|\tMOAElevation: " + Aida.Solution.GetElevationMOA(s * 10));
+                sb.AppendLine("Range: " + Aida.Solution.GetRange(s) + "\t|\tEnergy: " + Aida.Solution.GetKineticEnergy(s, 180) + "\t|\tMOAElevation: " + Aida.Solution.GetElevationMOA(s));
             }
             this.txtMain.Text = sb.ToString();
 

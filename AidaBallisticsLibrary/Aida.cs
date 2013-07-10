@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Data;
 
-namespace ABL
+namespace AidaBallisticsLibrary
 {
     public static class Aida
     {
@@ -14,7 +14,7 @@ namespace ABL
         internal const int BCOMP_MAXRANGE = 50001;
         internal static double[] sln; //an array holding the solution data produced by the solve algorithmn.  
         internal static AidaDataSet myDataset = new AidaDataSet();
-
+        
         /// <summary>A static class containing public functions realted to obtaining the solution data.</summary>
         public static class Solution
         {
@@ -521,11 +521,11 @@ namespace ABL
             double headwind = Aida.HeadWind(WindSpeed, WindAngle);
             double crosswind = Aida.CrossWind(WindSpeed, WindAngle);
 
-            double Gy = GRAVITY * Math.Cos(Internal.DegtoRad((ShootingAngle + ZeroAngle)));
-            double Gx = GRAVITY * Math.Sin(Internal.DegtoRad((ShootingAngle + ZeroAngle)));
+            double Gy = GRAVITY * Math.Cos(Aida.Internal.DegtoRad((ShootingAngle + ZeroAngle)));
+            double Gx = GRAVITY * Math.Sin(Aida.Internal.DegtoRad((ShootingAngle + ZeroAngle)));
 
-            vx = Vi * Math.Cos(Internal.DegtoRad(ZeroAngle));
-            vy = Vi * Math.Sin(Internal.DegtoRad(ZeroAngle));
+            vx = Vi * Math.Cos(Aida.Internal.DegtoRad(ZeroAngle));
+            vy = Vi * Math.Sin(Aida.Internal.DegtoRad(ZeroAngle));
 
             y = -SightHeight / 12;
 
@@ -552,7 +552,7 @@ namespace ABL
                 if (x / 3 >= n)
                 {
                     ptr[10 * n + 0] = x / 3;    // Range in yds
-                    ptr[10 * n + 1] = y * 12;	// Path in inches
+                    ptr[10 * n + 1] = y * 12;	// Elevation in inches
                     ptr[10 * n + 2] = -Aida.Internal.RadtoMOA(Math.Atan(y / x));    // Correction in MOA
                     ptr[10 * n + 3] = t + dt;   // Time in s
                     ptr[10 * n + 4] = Aida.Windage(crosswind, Vi, x, t + dt);    // Windage in inches

@@ -7,8 +7,8 @@
     <ProjectGuid>{4CBD2BFD-6D7F-4B43-9196-A34B667BD2D3}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ABL</RootNamespace>
-    <AssemblyName>ABL</AssemblyName>
+    <RootNamespace>AidaBallisticsLibrary</RootNamespace>
+    <AssemblyName>AidaBallisticsLibrary</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -29,6 +29,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>icon.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -40,6 +43,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Aida.cs" />
+    <Compile Include="AidaDataSet.cs">
+      <DependentUpon>AidaDataSet.xsd</DependentUpon>
+    </Compile>
     <Compile Include="AidaDataSet.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -63,6 +69,9 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Properties\DataSources\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="icon.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
