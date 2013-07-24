@@ -7,14 +7,15 @@ using System.Data;
 
 namespace AidaBallisticsLibrary
 {
-    public static class Aida
+    public enum DragFunctions { G1, G2, G3, G4, G5, G6, G7, G8 };
+
+    public static class GNUBL
     {
-        public enum DragFunctions { G1, G2, G3, G4, G5, G6, G7, G8 };
-        internal const double GRAVITY = -32.194;
+        internal const double GRAVITY = -32.174;
         internal const int BCOMP_MAXRANGE = 50001;
         internal static double[] sln; //an array holding the solution data produced by the solve algorithmn.  
         internal static AidaDataSet myDataset = new AidaDataSet();
-        
+
         /// <summary>A static class containing public functions realted to obtaining the solution data.</summary>
         public static class Solution
         {
@@ -135,7 +136,7 @@ namespace AidaBallisticsLibrary
             {
                 if (Yardage < sln.GetLength(0))
                 {
-                    return (Internal.SigFigTruncate(Math.Pow(Aida.Solution.GetVelocity(Yardage), 2) * Weight / 450400, 6));
+                    return (Internal.SigFigTruncate(Math.Pow(GNUBL.Solution.GetVelocity(Yardage), 2) * Weight / 450400, 6));
                 }
                 else return 0;
             }
@@ -204,29 +205,26 @@ namespace AidaBallisticsLibrary
             internal static double calcFR(double Temperature, double Pressure, double RelativeHumidity)
             {
                 double VPw = 4e-6 * Math.Pow(Temperature, 3) - 0.0004 * Math.Pow(Temperature, 2) + 0.0234 * Temperature - 0.2517;
-                double FRH = 0.995 * (Pressure / (Pressure - (0.3783) * (RelativeHumidity) * VPw));
-                return FRH;
+                return 0.995 * (Pressure / ((Pressure - (0.3783) * (RelativeHumidity) * VPw)));
             }
 
-            internal static double calcFP(double Pressure)
+            
+            ////TODO FIX STD PRESSURE STUFF******************************
+            internal static double calcFP(double Pressure, double Altitude)
             {
-                double Pstd = 29.53; // in-hg
-                double FP = 0;
-                FP = (Pressure - Pstd) / (Pstd);
-                return FP;
+                double Pstd = 29.92; // in-hg ......*******ERROR, CHANGED value from 29.53 to 29.44**********
+                return (Pressure - Pstd) / (Pstd);
             }
 
             internal static double calcFT(double Temperature, double Altitude)
             {
                 double Tstd = -0.0036 * Altitude + 59;
-                double FT = (Temperature - Tstd) / (459.6 + Tstd);
-                return FT;
+                return (Temperature - Tstd) / (459.6 + Tstd);  
             }
 
             internal static double calcFA(double Altitude)
             {
-                double fa = 0;
-                fa = -4e-15 * Math.Pow(Altitude, 3) + 4e-10 * Math.Pow(Altitude, 2) - 3e-5 * Altitude + 1;
+                double fa = -4e-15 * Math.Pow(Altitude, 3) + 4e-10 * Math.Pow(Altitude, 2) - 3e-5 * Altitude + 1;
                 return (1 / fa);
             }
 
@@ -237,7 +235,7 @@ namespace AidaBallisticsLibrary
         /// <param name="DragFunction">DragFunction:  G1, G2, G3, G4, G5, G6, G7, or G8.  All are enumerated above.</param>
         /// <param name="DragCoefficient">DragCoefficient:  The coefficient of drag for the projectile for the given drag function.</param>
         /// <param name="Vi">DragCoefficient:  The coefficient of drag for the projectile for the given drag function.</param>
-        internal static double retard(DragFunctions DragFunction, double DragCoefficient, double Vi)
+        private static double retard(DragFunctions DragFunction, double DragCoefficient, double Vi)
         {
             double vp = Vi;
             double val = -1;
@@ -353,25 +351,6 @@ namespace AidaBallisticsLibrary
             else return -1;
         }
 
-        /// <summary>A function to correct a "standard" Drag Coefficient for differing atmospheric conditions.</summary>
-        /// <returns>Returns a ballistic coefficient, corrected for the supplied atmospheric conditions.</returns>
-        /// <param name="DragCoefficient">DragCoefficient:  The coefficient of drag for a given projectile.</param>
-        /// <param name="Altitude">Altitude:  The altitude above sea level in feet.  Standard altitude is 0 feet above sea level.</param>
-        /// <param name="Barometer">Barometer:  The barometric pressure in inches of mercury (in Hg).  This is not "absolute" pressure, it is the "standardized" pressure reported in the papers and news. Standard pressure is 29.53 in Hg.</param>
-        /// <param name="Temperature">Temperature:  The temperature in Fahrenheit.  Standard temperature is 59 degrees.</param>
-        /// <param name="RelativeHumidity">RelativeHumidity:  The relative humidity fraction.  Ranges from 0.00 to 1.00, with 0.50 being 50% relative humidity.  Standard humidity is 78%.</param>
-        internal static double AtmosphereCorrection(double DragCoefficient, double Altitude, double Barometer, double Temperature, double RelativeHumidity)
-        {
-            double FA = Internal.calcFA(Altitude);
-            double FT = Internal.calcFT(Temperature, Altitude);
-            double FR = Internal.calcFR(Temperature, Barometer, RelativeHumidity);
-            double FP = Internal.calcFP(Barometer);
-
-            // Calculate the atmospheric correction factor
-            double CD = (FA * (1 + FT - FP) * FR);
-            return DragCoefficient * CD;
-        }
-
         /// <summary>A function to compute the windage deflection for a given crosswind speed, given flight time in a vacuum, and given flight time in real life.</summary>
         /// <returns>Returns the amount of windage correction, in inches, required to achieve zero on a target at the given range.</returns>
         /// <param name="WindSpeed">WindSpeed:  The wind velocity in mi/hr.</param>
@@ -404,6 +383,25 @@ namespace AidaBallisticsLibrary
             return (Math.Sin(Wangle) * WindSpeed);
         }
 
+        /// <summary>A function to correct a "standard" Drag Coefficient for differing atmospheric conditions.</summary>
+        /// <returns>Returns a ballistic coefficient, corrected for the supplied atmospheric conditions.</returns>
+        /// <param name="DragCoefficient">DragCoefficient:  The coefficient of drag for a given projectile.</param>
+        /// <param name="Altitude">Altitude:  The altitude above sea level in feet.  Standard altitude is 0 feet above sea level.</param>
+        /// <param name="Barometer">Barometer:  The barometric pressure in inches of mercury (in Hg).  This is not "absolute" pressure, it is the "standardized" pressure reported in the papers and news. Standard pressure is 29.53 in Hg.</param>
+        /// <param name="Temperature">Temperature:  The temperature in Fahrenheit.  Standard temperature is 59 degrees.</param>
+        /// <param name="RelativeHumidity">RelativeHumidity:  The relative humidity fraction.  Ranges from 0.00 to 1.00, with 0.50 being 50% relative humidity.  Standard humidity is 78%.</param>
+        public static double AtmosphereCorrection(double DragCoefficient, double Altitude, double Barometer, double Temperature, double RelativeHumidity)
+        {
+            double FA = Internal.calcFA(Altitude);
+            double FT = Internal.calcFT(Temperature, Altitude);
+            double FR = Internal.calcFR(Temperature, Barometer, RelativeHumidity);
+            double FP = Internal.calcFP(Barometer, Altitude);
+
+            // Calculate the atmospheric correction factor
+            double CD = (FA * (1 + FT - FP) * FR);
+            return DragCoefficient * CD;
+        }
+
         /// <summary>A function to determine the bore angle needed to achieve a target zero at Range yards (at standard conditions and on level ground.)</summary>
         /// <returns>Returns the angle of the bore relative to the sighting system, in degrees.</returns>
         /// <param name="DragFunction">DragFunction:  The drag function to use (G1, G2, G3, G5, G6, G7, G8).</param>
@@ -432,7 +430,7 @@ namespace AidaBallisticsLibrary
             int quit = 0; // We know it's time to quit our successive approximation loop when this is 1.
 
             // Start with a very coarse angular change, to quickly solve even large launch angle problems.
-            da = Aida.Internal.DegtoRad(14);
+            da = GNUBL.Internal.DegtoRad(14);
 
 
             // The general idea here is to start at 0 degrees elevation, and increase the elevation by 14 degrees
@@ -454,7 +452,7 @@ namespace AidaBallisticsLibrary
                     v = Math.Pow((Math.Pow(vx, 2) + Math.Pow(vy, 2)), 0.5);
                     dt = 1 / v;
 
-                    dv = Aida.retard(DragFunction, DragCoefficient, v);
+                    dv = GNUBL.retard(DragFunction, DragCoefficient, v);
                     dvy = -dv * vy / v * dt;
                     dvx = -dv * vx / v * dt;
 
@@ -487,13 +485,13 @@ namespace AidaBallisticsLibrary
                     da = -da / 2;
                 }
 
-                if (Math.Abs(da) < Aida.Internal.MOAtoRad(0.01)) quit = 1; // If our accuracy is sufficient, we can stop approximating.
-                if (angle > Aida.Internal.DegtoRad(45)) quit = 1; // If we exceed the 45 degree launch angle, then the projectile just won't get there, so we stop trying.
+                if (Math.Abs(da) < GNUBL.Internal.MOAtoRad(0.01)) quit = 1; // If our accuracy is sufficient, we can stop approximating.
+                if (angle > GNUBL.Internal.DegtoRad(45)) quit = 1; // If we exceed the 45 degree launch angle, then the projectile just won't get there, so we stop trying.
 
             }
 
 
-            return Aida.Internal.RadtoDeg(angle); // Convert to degrees for return value.
+            return GNUBL.Internal.RadtoDeg(angle); // Convert to degrees for return value.
         }
 
         /// <summary>A function to generate a ballistic solution table in 1 yard increments, up to __BCOMP_MAXRANGE__.</summary>
@@ -518,24 +516,24 @@ namespace AidaBallisticsLibrary
             double dv = 0, dvx = 0, dvy = 0;
             double x = 0, y = 0;
 
-            double headwind = Aida.HeadWind(WindSpeed, WindAngle);
-            double crosswind = Aida.CrossWind(WindSpeed, WindAngle);
+            double headwind = GNUBL.HeadWind(WindSpeed, WindAngle);
+            double crosswind = GNUBL.CrossWind(WindSpeed, WindAngle);
 
-            double Gy = GRAVITY * Math.Cos(Aida.Internal.DegtoRad((ShootingAngle + ZeroAngle)));
-            double Gx = GRAVITY * Math.Sin(Aida.Internal.DegtoRad((ShootingAngle + ZeroAngle)));
+            double Gy = GRAVITY * Math.Cos(GNUBL.Internal.DegtoRad((ShootingAngle + ZeroAngle)));
+            double Gx = GRAVITY * Math.Sin(GNUBL.Internal.DegtoRad((ShootingAngle + ZeroAngle)));
 
-            vx = Vi * Math.Cos(Aida.Internal.DegtoRad(ZeroAngle));
-            vy = Vi * Math.Sin(Aida.Internal.DegtoRad(ZeroAngle));
+            vx = Vi * Math.Cos(GNUBL.Internal.DegtoRad(ZeroAngle));
+            vy = Vi * Math.Sin(GNUBL.Internal.DegtoRad(ZeroAngle));
 
             y = -SightHeight / 12;
 
             int n = 0;
             for (t = 0; ; t = t + dt)
             {
-
                 vx1 = vx;
                 vy1 = vy;
-                v = Math.Pow(Math.Pow(vx, 2) + Math.Pow(vy, 2), 0.5);
+
+                v = Math.Sqrt(Math.Pow(vx, 2) + Math.Pow(vy, 2));
                 dt = 0.5 / v;
 
                 // Compute acceleration using the drag function retardation	
@@ -543,20 +541,27 @@ namespace AidaBallisticsLibrary
                 dvx = -(vx / v) * dv;
                 dvy = -(vy / v) * dv;
 
+                //// Compute velocity, including the resolved gravity vectors.	
+                //vx = vx + dt * dvx + dt * Gx;
+                //vy = vy + dt * dvy + dt * Gy;
+
                 // Compute velocity, including the resolved gravity vectors.	
                 vx = vx + dt * dvx + dt * Gx;
                 vy = vy + dt * dvy + dt * Gy;
-
-
+                v = Math.Sqrt(Math.Pow(vx, 2) + Math.Pow(vy, 2));
 
                 if (x / 3 >= n)
                 {
-                    ptr[10 * n + 0] = x / 3;    // Range in yds
+                    ptr[10 * n + 0] = Math.Round((double)x) / 3;    // Range in yds
                     ptr[10 * n + 1] = y * 12;	// Elevation in inches
-                    ptr[10 * n + 2] = -Aida.Internal.RadtoMOA(Math.Atan(y / x));    // Correction in MOA
+                    ptr[10 * n + 2] = GNUBL.Internal.RadtoMOA(Math.Atan(y / x));    // Correction in MOA
+                    double atan = Math.Atan(y / x);
+                    double moa = GNUBL.Internal.RadtoMOA(atan);
+                    if (100 == Math.Round((double)n))
+                        n = n;
                     ptr[10 * n + 3] = t + dt;   // Time in s
-                    ptr[10 * n + 4] = Aida.Windage(crosswind, Vi, x, t + dt);    // Windage in inches
-                    ptr[10 * n + 5] = Aida.Internal.RadtoMOA(Math.Atan(ptr[10 * n + 4]));   // Windage in MOA
+                    ptr[10 * n + 4] = GNUBL.Windage(crosswind, Vi, x, t + dt);    // Windage in inches
+                    ptr[10 * n + 5] = GNUBL.Internal.RadtoMOA(Math.Atan(ptr[10 * n + 4]));   // Windage in MOA
                     ptr[10 * n + 6] = v;    // Velocity (combined)
                     ptr[10 * n + 7] = vx;   // Velocity (x)
                     ptr[10 * n + 8] = vy;	// Velocity (y)
@@ -584,7 +589,7 @@ namespace AidaBallisticsLibrary
         /// <param name="DragFunction">Path:  A string containing the fulle or relative path of the file to load.</param>
         public static XmlReadMode LoadAidaDataset(string path)
         {
-            return (Aida.myDataset.ReadXml(path));
+            return (GNUBL.myDataset.ReadXml(path));
         }
 
         /// <summary>A function to write serialized AidaDataSet to disk.</summary>
@@ -592,9 +597,128 @@ namespace AidaBallisticsLibrary
         /// <param name="DragFunction">Path:  A string containing the fulle or relative path of the file to which to save the dataset as xml.</param>
         public static void SerializeAidaDataset(string path)
         {
-            Aida.myDataset.WriteXml(path);
+            GNUBL.myDataset.WriteXml(path);
         }
 
+
+    }
+
+    internal static class Extensions
+    {
+        internal static int ToInt(this double d)
+        {
+            return Convert.ToInt32(d);
+        }
+    }
+
+    public static class Aida
+    {
+        internal const double GRAVITY = -32.194;
+        public static AidaDataSet myDataset = new AidaDataSet();
+
+        public static class Inputs
+        {
+            public static double BC { get; set; }
+            public static int MuzzleVelocity { get; set; }
+            public static double HeightOfSight { get; set; }
+            public static int ZeroedRange { get; set; }
+            public static int RangeMin { get; set; }
+            public static int RangeMax { get; set; }
+            public static int RangeIncrement { get; set; }
+        }
+
+        internal static class Internal
+        {
+            internal static double K()
+            {
+                if (!Internal.InputsValid())
+                    return 0;
+                return 2.878 / (Inputs.BC * Inputs.MuzzleVelocity);
+            }
+
+            internal static double F(int range)
+            {
+                if (!Internal.InputsValid())
+                    return 0;
+                return 193 * (1 - ((0.37 * (Inputs.MuzzleVelocity - Internal.Velocity(range))) / (Inputs.MuzzleVelocity)));
+            }
+
+            internal static int Velocity(int range)
+            {
+                if (!Internal.InputsValid())
+                    return 0;
+                return Math.Pow((Math.Sqrt(Inputs.MuzzleVelocity) - (0.00863 * (range / Inputs.BC))), 2).ToInt();
+            }
+
+            internal static double Time(int range)
+            {
+                if (!Internal.InputsValid())
+                    return 0;
+                return (3 * range) / (Inputs.MuzzleVelocity * (1 - 0.003 * range * (Internal.K())));
+            }
+
+            internal static double DropFromLineOfDeparture(int range)
+            {
+                if (!Internal.InputsValid())
+                    return 0;
+                return Internal.F(range) * (Math.Pow(Internal.Time(range), 2));
+            }
+
+            internal static double ElevationMOA(int range)
+            {
+                if (!Internal.InputsValid() || range == 0)
+                    return 0;
+                return (100 * (Internal.DropFromLineOfDeparture(range) + Inputs.HeightOfSight) / range) - (Internal.ElevationMOAatZeroRange());
+            }
+
+            internal static double ElevationMOAatZeroRange()
+            {
+                if (!Internal.InputsValid())
+                    return 0;
+                return 100 * (Internal.DropFromLineOfDeparture(Inputs.ZeroedRange) + Inputs.HeightOfSight) / Inputs.ZeroedRange;
+            }
+
+            internal static double ElevationInches(int range)
+            {
+                if (!Internal.InputsValid() || range == 0)
+                    return 0;
+                return ((Internal.ElevationMOAatZeroRange() - Internal.ElevationMOA(range)) * range) / 100.0;
+            }
+
+            internal static bool InputsValid()
+            {
+                // NOT IMPLEMENTED - write check to validate all inputs are good to go
+                return true;
+            }
+        }
+
+        public static bool Solve()
+        {
+            if (!Internal.InputsValid())
+                return false;
+            
+            int x = 0;
+            while (x <= Inputs.RangeMax)
+            {
+                AidaDataSet.SolutionRow row = myDataset.Solution.NewSolutionRow();
+                row.Range = x;
+                row.UniqueID = Guid.NewGuid();
+                row.DummyK = Internal.K();
+                row.Velocity = Internal.Velocity(x);
+                row.TimeOfFlight = Internal.Time(x);
+                row.DummyF = Internal.F(x);
+                row.TotalDropFromLine = Internal.DropFromLineOfDeparture(x);
+                row.ElevationMOA = Math.Round(Internal.ElevationMOA(x),1);
+                row.Elevation = Internal.ElevationInches(x);
+                // add windage
+                row.Windage = 0.0;
+                // add bullet path, above below LOS in inches
+                myDataset.Solution.AddSolutionRow(row);
+
+                x += Inputs.RangeIncrement;
+            }
+            return true;
+        }
 
     }
 }

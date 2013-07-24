@@ -83,6 +83,10 @@
       <Project>{4cbd2bfd-6d7f-4b43-9196-a34b667bd2d3}</Project>
       <Name>AidaBallisticsLibrary</Name>
     </ProjectReference>
+    <ProjectReference Include="..\AidaBallistics\AidaBallistics.csproj">
+      <Project>{22f43b09-069d-4ffe-9720-56124bceee37}</Project>
+      <Name>AidaBallistics</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

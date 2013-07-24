@@ -45,6 +45,7 @@
     <Compile Include="Aida.cs" />
     <Compile Include="AidaDataSet.cs">
       <DependentUpon>AidaDataSet.xsd</DependentUpon>
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="AidaDataSet.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -61,7 +62,7 @@
       <SubType>Designer</SubType>
       <Generator>MSDataSetGenerator</Generator>
       <LastGenOutput>AidaDataSet.Designer.cs</LastGenOutput>
-      <CustomToolNamespace>ABL</CustomToolNamespace>
+      <CustomToolNamespace>AidaBallisticsLibrary</CustomToolNamespace>
     </None>
     <None Include="AidaDataSet.xss">
       <DependentUpon>AidaDataSet.xsd</DependentUpon>
